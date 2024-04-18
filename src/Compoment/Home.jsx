@@ -103,6 +103,7 @@ export default function Home() {
       .then((rs) => {
         if (rs.data.Status === "Success") {
           OpenDelete(false, "", "", "");
+          window.location.reload();
         }
       })
       .catch((err) => {
