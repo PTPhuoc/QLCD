@@ -99,20 +99,24 @@ export default function Quy() {
 
   const Year = CurrentDay.getFullYear();
 
+  const SetTongQuy = () => {
+    axios
+      .get("http://localhost:9000/Quy/TongQuy")
+      .then((rs2) => {
+        setTongQuy(rs2.data[0].TongTien);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     setIsStatus({ ...isStatus, Loader: true });
     axios
       .get("http://localhost:9000/Quy/XuLyDuLieu")
       .then((rs1) => {
-        axios
-          .get("http://localhost:9000/Quy/TongQuy")
-          .then((rs2) => {
-            setTongQuy(rs2.data[0].TongTien);
-            setIsHandle({ Message: rs1.data.Status });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        SetTongQuy();
+        setIsHandle({ Message: rs1.data.Status });
       })
       .catch((err) => {
         console.log(err);
@@ -506,6 +510,77 @@ export default function Quy() {
   };
 
   const CloseEdit = () => {
+    if (editThanhVien.Loai === "DaoTao") {
+      axios
+        .post("http://localhost:9000/Quy/PhongDaoTao", {
+          Nam: optionSelete.NamPDT,
+          Quy: optionSelete.QuyPDT,
+        })
+        .then((rs) => {
+          if (rs.data.Status !== "Not Found") {
+            setPhongDaoTao(rs.data);
+            SetTongQuy();
+          } else {
+            setPhongDaoTao([]);
+          }
+        });
+    } else if (editThanhVien.Loai === "CongTac") {
+      axios
+        .post("http://localhost:9000/Quy/PhongCongTac", {
+          Nam: optionSelete.NamPCT,
+          Quy: optionSelete.QuyPCT,
+        })
+        .then((rs) => {
+          if (rs.data.Status !== "Not Found") {
+            setPhongCongTac(rs.data);
+            SetTongQuy();
+          } else {
+            setPhongCongTac([]);
+          }
+        });
+    } else if (editThanhVien.Loai === "HCQT") {
+      axios
+        .post("http://localhost:9000/Quy/PhongHCQT", {
+          Nam: optionSelete.NamPHCQT,
+          Quy: optionSelete.QuyPHCQT,
+        })
+        .then((rs) => {
+          if (rs.data.Status !== "Not Found") {
+            setPhongHCQT(rs.data);
+            SetTongQuy();
+          } else {
+            setPhongHCQT([]);
+          }
+        });
+    } else if (editThanhVien.Loai === "KhaoThi") {
+      axios
+        .post("http://localhost:9000/Quy/PhongKhaoThi", {
+          Nam: optionSelete.NamPKT,
+          Quy: optionSelete.QuyPKT,
+        })
+        .then((rs) => {
+          if (rs.data.Status !== "Not Found") {
+            setPhongKhaoThi(rs.data);
+            SetTongQuy();
+          } else {
+            setPhongKhaoThi([]);
+          }
+        });
+    } else {
+      axios
+        .post("http://localhost:9000/Quy/PhongKHTC", {
+          Nam: optionSelete.NamPKHTC,
+          Quy: optionSelete.QuyPKHTC,
+        })
+        .then((rs) => {
+          if (rs.data.Status !== "Not Found") {
+            setPhongKHTC(rs.data);
+            SetTongQuy();
+          } else {
+            setPhongKHTC([]);
+          }
+        });
+    }
     setEditThanhVien({
       _id: "",
       Ma: "",
@@ -542,7 +617,6 @@ export default function Quy() {
         .then((rs) => {
           if (rs.data.Status === "Success") {
             setWrongEdit({ Ngay: false, SoTien: false });
-            setOptionSelete({ ...optionSelete });
             CloseEdit();
           }
         })
@@ -891,7 +965,18 @@ export default function Quy() {
                     </div>
                     <div className="flex gap-5">
                       <div className="w-[40px] h-[40px]">
-                        <button className="w-[40px] h-[40px] flex justify-center items-center">
+                        <button
+                          onClick={() =>
+                            OnEdit(
+                              "CongTac",
+                              i._id,
+                              i.Ma,
+                              i.Ten,
+                              "Phòng Công Tác"
+                            )
+                          }
+                          className="w-[40px] h-[40px] flex justify-center items-center"
+                        >
                           <div>
                             <svg
                               className="w-[25px]"
@@ -980,7 +1065,18 @@ export default function Quy() {
                     </div>
                     <div className="flex gap-5">
                       <div className="w-[40px] h-[40px]">
-                        <button className="w-[40px] h-[40px] flex justify-center items-center">
+                        <button
+                          onClick={() =>
+                            OnEdit(
+                              "HCQT",
+                              i._id,
+                              i.Ma,
+                              i.Ten,
+                              "Phòng Hàng Chính - Quản Trị"
+                            )
+                          }
+                          className="w-[40px] h-[40px] flex justify-center items-center"
+                        >
                           <div>
                             <svg
                               className="w-[25px]"
@@ -1069,7 +1165,18 @@ export default function Quy() {
                     </div>
                     <div className="flex gap-5">
                       <div className="w-[40px] h-[40px]">
-                        <button className="w-[40px] h-[40px] flex justify-center items-center">
+                        <button
+                          onClick={() =>
+                            OnEdit(
+                              "KhaoThi",
+                              i._id,
+                              i.Ma,
+                              i.Ten,
+                              "Phòng Khảo Thí"
+                            )
+                          }
+                          className="w-[40px] h-[40px] flex justify-center items-center"
+                        >
                           <div>
                             <svg
                               className="w-[25px]"
@@ -1158,7 +1265,18 @@ export default function Quy() {
                     </div>
                     <div className="flex gap-5">
                       <div className="w-[40px] h-[40px]">
-                        <button className="w-[40px] h-[40px] flex justify-center items-center">
+                        <button
+                          onClick={() =>
+                            OnEdit(
+                              "KHTC",
+                              i._id,
+                              i.Ma,
+                              i.Ten,
+                              "Phòng Kế Hoạch - Tài Chính"
+                            )
+                          }
+                          className="w-[40px] h-[40px] flex justify-center items-center"
+                        >
                           <div>
                             <svg
                               className="w-[25px]"
