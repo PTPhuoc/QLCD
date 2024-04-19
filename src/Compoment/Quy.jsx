@@ -841,7 +841,7 @@ export default function Quy() {
                   <OptionQuy Name={"QuyPDT"} />
                 </div>
               </div>
-              <div className="bg-white px-6 py-1 rounded-xl w-[250px]">
+              <div className={quyTaiPhong.DaoTao === 0 ? "bg-white px-6 py-1 rounded-xl w-[250px]" : "bg-white px-6 py-1 rounded-xl"}>
                 <p>Tổng: {quyTaiPhong.DaoTao.toLocaleString("en-US")} VND</p>
               </div>
             </div>
@@ -947,7 +947,7 @@ export default function Quy() {
                   <OptionQuy Name={"QuyPCT"} />
                 </div>
               </div>
-              <div className="bg-white px-6 py-1 rounded-xl w-[250px]">
+              <div className={quyTaiPhong.CongTac === 0 ? "bg-white px-6 py-1 rounded-xl w-[250px]" : "bg-white px-6 py-1 rounded-xl"}>
                 <p>Tổng: {quyTaiPhong.CongTac.toLocaleString("en-US")} VND</p>
               </div>
             </div>
@@ -1053,7 +1053,7 @@ export default function Quy() {
                   <OptionQuy Name={"QuyPHCQT"} />
                 </div>
               </div>
-              <div className="bg-white px-6 py-1 rounded-xl w-[250px]">
+              <div className={quyTaiPhong.HCQT === 0 ? "bg-white px-6 py-1 rounded-xl w-[250px]" : "bg-white px-6 py-1 rounded-xl"}>
                 <p>Tổng: {quyTaiPhong.HCQT.toLocaleString("en-US")} VND</p>
               </div>
             </div>
@@ -1159,7 +1159,7 @@ export default function Quy() {
                   <OptionQuy Name={"QuyPKT"} />
                 </div>
               </div>
-              <div className="bg-white px-6 py-1 rounded-xl w-[250px]">
+              <div className={quyTaiPhong.KhaoThi === 0 ? "bg-white px-6 py-1 rounded-xl w-[250px]" : "bg-white px-6 py-1 rounded-xl"}>
                 <p>Tổng: {quyTaiPhong.KhaoThi.toLocaleString("en-US")} VND</p>
               </div>
             </div>
@@ -1265,7 +1265,7 @@ export default function Quy() {
                   <OptionQuy Name={"QuyPKHTC"} />
                 </div>
               </div>
-              <div className="bg-white px-6 py-1 rounded-xl w-[250px]">
+              <div className={quyTaiPhong.KHTC === 0 ? "bg-white px-6 py-1 rounded-xl w-[250px]" : "bg-white px-6 py-1 rounded-xl"}>
                 <p>Tổng: {quyTaiPhong.KHTC.toLocaleString("en-US")} VND</p>
               </div>
             </div>
