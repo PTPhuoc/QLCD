@@ -75,7 +75,7 @@ export default function ThemThanhVien() {
   useEffect(() => {
     setIsStatus({ ...isStatus, Loader: true });
     axios
-      .get("http://localhost:9000/ThanhVien/ChucVu")
+      .post("http://localhost:9000/ThanhVien/ChucVu", {_id: "", Loai: loai})
       .then((rs) => {
         setChucVu(rs.data);
       })
