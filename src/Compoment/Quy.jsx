@@ -863,6 +863,12 @@ export default function Quy() {
                     <div>
                       <p>Đã Đóng: {i.SoTien.toLocaleString("en-US")} VND</p>
                     </div>
+                    <div>
+                      <p>
+                        Ngày Đóng:{" "}
+                        {i.FullDay !== "Empty" ? i.FullDay : "Chưa Đóng"}
+                      </p>
+                    </div>
                     <div className="flex gap-5">
                       <div className="w-[40px] h-[40px]">
                         <button
@@ -962,6 +968,12 @@ export default function Quy() {
                     </div>
                     <div>
                       <p>Đã Đóng: {i.SoTien.toLocaleString("en-US")} VND</p>
+                    </div>
+                    <div>
+                      <p>
+                        Ngày Đóng:{" "}
+                        {i.FullDay !== "Empty" ? i.FullDay : "Chưa Đóng"}
+                      </p>
                     </div>
                     <div className="flex gap-5">
                       <div className="w-[40px] h-[40px]">
@@ -1063,6 +1075,12 @@ export default function Quy() {
                     <div>
                       <p>Đã Đóng: {i.SoTien.toLocaleString("en-US")} VND</p>
                     </div>
+                    <div>
+                      <p>
+                        Ngày Đóng:{" "}
+                        {i.FullDay !== "Empty" ? i.FullDay : "Chưa Đóng"}
+                      </p>
+                    </div>
                     <div className="flex gap-5">
                       <div className="w-[40px] h-[40px]">
                         <button
@@ -1163,6 +1181,12 @@ export default function Quy() {
                     <div>
                       <p>Đã Đóng: {i.SoTien.toLocaleString("en-US")} VND</p>
                     </div>
+                    <div>
+                      <p>
+                        Ngày Đóng:{" "}
+                        {i.FullDay !== "Empty" ? i.FullDay : "Chưa Đóng"}
+                      </p>
+                    </div>
                     <div className="flex gap-5">
                       <div className="w-[40px] h-[40px]">
                         <button
@@ -1262,6 +1286,12 @@ export default function Quy() {
                     </div>
                     <div>
                       <p>Đã Đóng: {i.SoTien.toLocaleString("en-US")} VND</p>
+                    </div>
+                    <div>
+                      <p>
+                        Ngày Đóng:{" "}
+                        {i.FullDay !== "Empty" ? i.FullDay : "Chưa Đóng"}
+                      </p>
                     </div>
                     <div className="flex gap-5">
                       <div className="w-[40px] h-[40px]">
