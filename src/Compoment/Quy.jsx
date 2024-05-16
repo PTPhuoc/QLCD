@@ -79,9 +79,46 @@ export default function Quy() {
     Ngay: false,
   });
 
-  const ChangeOptionSelete = (e) => {
-    const { name, value } = e.target;
-    setOptionSelete({ ...optionSelete, [name]: parseInt(value) });
+  useEffect(() => {
+    console.log(tongQuy);
+    console.log(isStatus);
+    console.table(optionSelete);
+  });
+
+  const SetTongQuy = () => {
+    axios
+      .get("http://localhost:9000/Quy/TongQuy")
+      .then((rs2) => {
+        setTongQuy(rs2.data[0].TongTien);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    setIsStatus({ SideBar: true, Login: false, Loader: true });
+    SetTongQuy();
+    axios
+      .get("http://localhost:9000/Quy/XuLyDuLieu")
+      .then((rs1) => {
+        setIsHandle({ Message: rs1.data.Status });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (isHandle.Message === "Success") {
+      setIsStatus({ SideBar: true, Login: false, Loader: false });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isHandle.Message]);
+
+  const ChangeOptionSelete = (name, value) => {
+    setOptionSelete({ ...optionSelete, [name]: value });
   };
 
   const ChangeYearBar = (name, value) => {
@@ -98,38 +135,6 @@ export default function Quy() {
   };
 
   const Year = CurrentDay.getFullYear();
-
-  const SetTongQuy = () => {
-    axios
-      .get("http://localhost:9000/Quy/TongQuy")
-      .then((rs2) => {
-        setTongQuy(rs2.data[0].TongTien);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    setIsStatus({ ...isStatus, Loader: true });
-    axios
-      .get("http://localhost:9000/Quy/XuLyDuLieu")
-      .then((rs1) => {
-        SetTongQuy();
-        setIsHandle({ Message: rs1.data.Status });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (isHandle.Message === "Success") {
-      setIsStatus({ ...isStatus, Loader: false });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isHandle.Message]);
 
   useEffect(() => {
     setIsWait({ ...isWait, DaoTao: true });
@@ -308,9 +313,7 @@ export default function Quy() {
         <div className="w-full">
           <button
             type="button"
-            onClick={ChangeOptionSelete}
-            name={Loai}
-            value={i}
+            onClick={() => ChangeOptionSelete(Loai, i)}
             className="duration-200 border-2 border-white bg-white ease-linear w-full rounded-xl hover:bg-zinc-400 hover:text-white"
           >
             {i}
@@ -327,9 +330,7 @@ export default function Quy() {
         <div className="w-full">
           <button
             type="button"
-            value={1}
-            name={Name}
-            onClick={ChangeOptionSelete}
+            onClick={() => ChangeOptionSelete(Name, 1)}
             className="duration-200 border-2 border-white bg-white ease-linear w-full rounded-xl hover:bg-zinc-400 hover:text-white"
           >
             1
@@ -338,9 +339,7 @@ export default function Quy() {
         <div className="w-full">
           <button
             type="button"
-            value={2}
-            name={Name}
-            onClick={ChangeOptionSelete}
+            onClick={() => ChangeOptionSelete(Name, 2)}
             className="duration-200 border-2 border-white bg-white ease-linear w-full rounded-xl hover:bg-zinc-400 hover:text-white"
           >
             2
@@ -349,9 +348,7 @@ export default function Quy() {
         <div className="w-full">
           <button
             type="button"
-            value={3}
-            name={Name}
-            onClick={ChangeOptionSelete}
+            onClick={() => ChangeOptionSelete(Name, 3)}
             className="duration-200 border-2 border-white bg-white ease-linear w-full rounded-xl hover:bg-zinc-400 hover:text-white"
           >
             3
@@ -360,9 +357,7 @@ export default function Quy() {
         <div className="w-full">
           <button
             type="button"
-            value={4}
-            name={Name}
-            onClick={ChangeOptionSelete}
+            onClick={() => ChangeOptionSelete(Name, 4)}
             className="duration-200 border-2 border-white bg-white ease-linear w-full rounded-xl hover:bg-zinc-400 hover:text-white"
           >
             4
@@ -442,7 +437,8 @@ export default function Quy() {
   }, [inputDate.Nam]);
 
   useEffect(() => {
-    axios
+    if(editThanhVien.Open === true){
+      axios
       .post("http://localhost:9000/Quy/LaySoTienThanhVien", {
         Loai: editThanhVien.Loai,
         _id: editThanhVien._id,
@@ -488,13 +484,11 @@ export default function Quy() {
       .catch((err) => {
         console.log(err);
       });
+      setIsStatus({ SideBar: true, Login: false, Loader: false });
+    }
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editThanhVien.Ma]);
-
-  useEffect(() => {
-    setIsStatus({ ...isStatus, Loader: false });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editThanhVien.SoTien]);
 
   const OnEdit = (Type, _id, Ma, Ten, Phong) => {
     setIsStatus({ ...isStatus, Loader: true });
@@ -841,7 +835,13 @@ export default function Quy() {
                   <OptionQuy Name={"QuyPDT"} />
                 </div>
               </div>
-              <div className={quyTaiPhong.DaoTao === 0 ? "bg-white px-6 py-1 rounded-xl w-[250px]" : "bg-white px-6 py-1 rounded-xl"}>
+              <div
+                className={
+                  quyTaiPhong.DaoTao === 0
+                    ? "bg-white px-6 py-1 rounded-xl w-[250px]"
+                    : "bg-white px-6 py-1 rounded-xl"
+                }
+              >
                 <p>Tổng: {quyTaiPhong.DaoTao.toLocaleString("en-US")} VND</p>
               </div>
             </div>
@@ -947,7 +947,13 @@ export default function Quy() {
                   <OptionQuy Name={"QuyPCT"} />
                 </div>
               </div>
-              <div className={quyTaiPhong.CongTac === 0 ? "bg-white px-6 py-1 rounded-xl w-[250px]" : "bg-white px-6 py-1 rounded-xl"}>
+              <div
+                className={
+                  quyTaiPhong.CongTac === 0
+                    ? "bg-white px-6 py-1 rounded-xl w-[250px]"
+                    : "bg-white px-6 py-1 rounded-xl"
+                }
+              >
                 <p>Tổng: {quyTaiPhong.CongTac.toLocaleString("en-US")} VND</p>
               </div>
             </div>
@@ -1053,7 +1059,13 @@ export default function Quy() {
                   <OptionQuy Name={"QuyPHCQT"} />
                 </div>
               </div>
-              <div className={quyTaiPhong.HCQT === 0 ? "bg-white px-6 py-1 rounded-xl w-[250px]" : "bg-white px-6 py-1 rounded-xl"}>
+              <div
+                className={
+                  quyTaiPhong.HCQT === 0
+                    ? "bg-white px-6 py-1 rounded-xl w-[250px]"
+                    : "bg-white px-6 py-1 rounded-xl"
+                }
+              >
                 <p>Tổng: {quyTaiPhong.HCQT.toLocaleString("en-US")} VND</p>
               </div>
             </div>
@@ -1159,7 +1171,13 @@ export default function Quy() {
                   <OptionQuy Name={"QuyPKT"} />
                 </div>
               </div>
-              <div className={quyTaiPhong.KhaoThi === 0 ? "bg-white px-6 py-1 rounded-xl w-[250px]" : "bg-white px-6 py-1 rounded-xl"}>
+              <div
+                className={
+                  quyTaiPhong.KhaoThi === 0
+                    ? "bg-white px-6 py-1 rounded-xl w-[250px]"
+                    : "bg-white px-6 py-1 rounded-xl"
+                }
+              >
                 <p>Tổng: {quyTaiPhong.KhaoThi.toLocaleString("en-US")} VND</p>
               </div>
             </div>
@@ -1265,7 +1283,13 @@ export default function Quy() {
                   <OptionQuy Name={"QuyPKHTC"} />
                 </div>
               </div>
-              <div className={quyTaiPhong.KHTC === 0 ? "bg-white px-6 py-1 rounded-xl w-[250px]" : "bg-white px-6 py-1 rounded-xl"}>
+              <div
+                className={
+                  quyTaiPhong.KHTC === 0
+                    ? "bg-white px-6 py-1 rounded-xl w-[250px]"
+                    : "bg-white px-6 py-1 rounded-xl"
+                }
+              >
                 <p>Tổng: {quyTaiPhong.KHTC.toLocaleString("en-US")} VND</p>
               </div>
             </div>
