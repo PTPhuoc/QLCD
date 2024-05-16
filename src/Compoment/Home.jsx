@@ -295,7 +295,10 @@ export default function Home() {
                 </div>
                 <div className="flex gap-5">
                   <div className="w-[40px] h-[40px]">
-                    <button className="w-[40px] h-[40px] flex justify-center items-center">
+                    <button
+                      onClick={() => GetInfor(i.Ma, i.Loai)}
+                      className="w-[40px] h-[40px] flex justify-center items-center"
+                    >
                       <div>
                         <svg
                           className="w-[25px]"
@@ -369,7 +372,10 @@ export default function Home() {
                 </div>
                 <div className="flex gap-5">
                   <div className="w-[40px] h-[40px]">
-                    <button className="w-[40px] h-[40px] flex justify-center items-center">
+                    <button
+                      onClick={() => GetInfor(i.Ma, i.Loai)}
+                      className="w-[40px] h-[40px] flex justify-center items-center"
+                    >
                       <div>
                         <svg
                           className="w-[25px]"
@@ -443,7 +449,10 @@ export default function Home() {
                 </div>
                 <div className="flex gap-5">
                   <div className="w-[40px] h-[40px]">
-                    <button className="w-[40px] h-[40px] flex justify-center items-center">
+                    <button
+                      onClick={() => GetInfor(i.Ma, i.Loai)}
+                      className="w-[40px] h-[40px] flex justify-center items-center"
+                    >
                       <div>
                         <svg
                           className="w-[25px]"
@@ -517,7 +526,10 @@ export default function Home() {
                 </div>
                 <div className="flex gap-5">
                   <div className="w-[40px] h-[40px]">
-                    <button className="w-[40px] h-[40px] flex justify-center items-center">
+                    <button
+                      onClick={() => GetInfor(i.Ma, i.Loai)}
+                      className="w-[40px] h-[40px] flex justify-center items-center"
+                    >
                       <div>
                         <svg
                           className="w-[25px]"
@@ -591,7 +603,10 @@ export default function Home() {
                 </div>
                 <div className="flex gap-5">
                   <div className="w-[40px] h-[40px]">
-                    <button className="w-[40px] h-[40px] flex justify-center items-center">
+                    <button
+                      onClick={() => GetInfor(i.Ma, i.Loai)}
+                      className="w-[40px] h-[40px] flex justify-center items-center"
+                    >
                       <div>
                         <svg
                           className="w-[25px]"
